@@ -1,0 +1,18 @@
+name: imdb_dataset
+
+services:
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    env_file:
+      - .env
+    restart: always
+    volumes:
+      - imdb_db_data:/var/lib/postgresql/data:rw
+      - ./services/postgres/scripts:/docker-entrypoint-initdb.d:rx
+      - ./datasets:/datasets:ro
+    ports:
+      - "5432:5432"
+
+volumes:
+  imdb_db_data:
